@@ -7,18 +7,18 @@ import 'custom_error_widget.dart';
 
 final class TomsFlutterErrors {
   const TomsFlutterErrors._({
-    required this.appName,
+    required this.ourCodePath,
     required this.consoleWidth,
   });
 
   static late final TomsFlutterErrors instance;
 
   static void initialize({
-    required String appName,
+    required String ourCodePath,
     required int consoleWidth,
   }) {
     instance = TomsFlutterErrors._(
-      appName: appName,
+      ourCodePath: ourCodePath,
       consoleWidth: consoleWidth,
     );
 
@@ -26,7 +26,7 @@ final class TomsFlutterErrors {
     CustomErrorWidget.install();
   }
 
-  final String appName;
+  final String ourCodePath;
   final int consoleWidth;
 
   // get terminal width dynamically?
@@ -98,6 +98,8 @@ class _LogColorizer {
 
   // Factory constructor with default matchers
   factory _LogColorizer.standard({required int maxLineWidth}) {
+    final ourCodePath = RegExp.escape(TomsFlutterErrors.instance.ourCodePath);
+
     return _LogColorizer._(matchers: {
       // RegExp(r'(?<=The relevant error-causing widget was:\n).*',
       RegExp(r'The relevant error-causing widget was:', multiLine: true): (
@@ -110,8 +112,8 @@ class _LogColorizer {
         replace: (match) => match.group(0)!._truncate(maxLineWidth - 1),
       ),
 
-      // Match file paths (assuming they start with 'file:///')
-      RegExp(r'.*(file:\/\/\/[^\s:]*unitymeet\/flutter_app\/)[^\s:]*'): (
+      // Match file paths containing `ourCodePath`
+      RegExp(".*(file:\\/\\/\\/[^\s:]*$ourCodePath)[^\\s:]*"): (
         color: () => AnsiPen()..yellow(),
         replace: (match) {
           final line = match.group(0)!;

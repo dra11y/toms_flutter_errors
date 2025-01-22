@@ -40,7 +40,8 @@ class ErrorView extends StatelessWidget {
             const SizedBox(height: 20),
             for (final line in stackTrace.toString().split('\n'))
               Builder(builder: (context) {
-                final isApp = line.contains(TomsFlutterErrors.instance.appName);
+                final isApp =
+                    line.contains(TomsFlutterErrors.instance.ourCodePath);
                 return Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
