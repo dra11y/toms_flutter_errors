@@ -1,0 +1,19 @@
+name: toms_flutter_errors
+description: "Flutter Error handling, the way I want it."
+version: 0.0.1
+homepage: https://github.com/dra11y/toms_flutter_errors
+
+environment:
+  sdk: ^3.6.1
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  stack_trace: ^1.12.0
+  talker_flutter: ^4.6.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
